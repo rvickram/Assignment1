@@ -2,11 +2,14 @@ package assignment1;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.ComboBox;
 
 /**
  * FXML Controller class, controls Main
@@ -15,12 +18,16 @@ import javafx.scene.control.Slider;
  */
 public class MainController implements Initializable {
     
+    ObservableList<String> listItems = FXCollections.observableArrayList();
+    
     @FXML
     Label labelSize;
     @FXML
     Slider sliderArraySize;
     @FXML
     Button resetBtn;
+    @FXML
+    ComboBox comboAlgorithms;
     
     @FXML
     public void arraySizeBar_ValueChanged(){ //changes the label to slider value
@@ -32,6 +39,11 @@ public class MainController implements Initializable {
         sliderArraySize.setValue(1);
         labelSize.setText("1");
     }
+    
+    private void setSortStrategy(){
+        listItems.addAll("MergeSort","SelectionSort");
+        comboAlgorithms.setItems(listItems);
+    }
 
     /**
      * Initializes the controller class.
@@ -40,7 +52,7 @@ public class MainController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+        setSortStrategy();
+    }   
     
 }
