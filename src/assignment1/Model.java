@@ -38,7 +38,6 @@ public class Model {
      */
     public void setArraySize(int maxHeight, int size)
     {
-        System.out.println("function received param");
         intArray = Arrays.copyOf(intArray, size);
         
         int i;
