@@ -4,35 +4,39 @@ package assignment1;
  *
  * @author ryanv
  */
-public class SelectionSort {
+public class SelectionSort implements SortingStrategy{
+    
+    public void Sort(int[]a){
+        selectionSort(a, a.length);
+    }
     /**Sorts an array using SelectionSort method
      * 
      * @param a the input array
      * @param size the size of the array
      * @param <T> template, accepts any type array
      */
-    public static <T extends Comparable<? super T>> void selectionSort(T[] a, int size){
+    public void selectionSort(int[] a, int size){
         for(int index = 0; index < size - 1; index++){
-            int indexOfNextSmallest = 0;
+            int indexOfNextSmallest = getIndexOfSmallest (a, index, size - 1);;
             swap(a, index, indexOfNextSmallest);
         }
     }
     
-    private static <T extends Comparable <? super T>> int getIndexOfSmallest
-        (T [] a, int first, int last) {
-        T min = a [first];
+    private int getIndexOfSmallest(int[] a, int first, int last) {
+        int min = a [first];
         int indexOfMin = first;
         for (int index = first + 1 ; index <= last ; index++) {
-            if (a [index].compareTo (min) < 0) {
+                if (min > a[index]) {
                 min = a [index];
                 indexOfMin = index;
             } // end if
         } // end for
-        return indexOfMin;
+return indexOfMin;
+
     } // end getIndexOfSmallest
     
-    private static void swap (Object [] a, int i, int j) {
-        Object temp = a [i];
+    private static void swap (int [] a, int i, int j) {
+        int temp = a [i];
         a [i] = a [j];
         a [j] = temp;
     }

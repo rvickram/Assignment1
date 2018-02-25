@@ -14,6 +14,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.ComboBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class, controls Main
@@ -22,8 +23,11 @@ import javafx.scene.shape.Rectangle;
  */
 public class MainController implements Initializable {
     
+    //holds items to go in combo box
     ObservableList<String> listItems = FXCollections.observableArrayList();
     Model heightsArray = new Model();
+    SortingStrategy selection;
+    
     
     @FXML
     AnchorPane recDisplay;
@@ -48,7 +52,20 @@ public class MainController implements Initializable {
     
     @FXML
     public void sortBtn_Click(){
-        
+        try{
+            if(comboAlgorithms.getValue().toString() == "SelectionSort"){
+                selection = new SelectionSort();
+                selection.Sort(heightsArray.getUnsortedList());
+                drawRectangles();
+            }
+            else if(comboAlgorithms.getValue().toString() == "MergeSort"){
+                selection = new MergeSort();
+                selection.Sort(heightsArray.getUnsortedList());
+                drawRectangles();
+            }
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, "You have not selected a sorting option!", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
     
     @FXML
@@ -63,20 +80,11 @@ public class MainController implements Initializable {
         //clear pane:
         recDisplay.getChildren().clear();
         
-        
-        //temporary array filled with random ints
-        int[] array = heightsArray.getUnsortedList();
+        //loop sets coords of each rectangle, and draws them:
         for(int i = 0; i < (int)sliderArraySize.getValue(); i++){
-            //loads array with random integers
-            array[i] = ThreadLocalRandom.current().nextInt(1, recDisplay.heightProperty().getValue().intValue());
-            
-            /*
-            //draws rectangle based on height:
+            //sets width, and x/y coords of new rectangle object:
             double width = (recDisplay.widthProperty().getValue()/sliderArraySize.getValue());
-            double height = (array[i]/sliderArraySize.getValue())*recDisplay.heightProperty().getValue();
-            */
-            double width = (recDisplay.widthProperty().getValue()/sliderArraySize.getValue());
-            double height = (array[i]);
+            double height = (heightsArray.getUnsortedList()[i]);
             
             double x = width*i;
             double y = recDisplay.heightProperty().getValue() - height;
