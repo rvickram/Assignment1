@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -11,9 +12,10 @@
       <Label layoutX="14.0" layoutY="360.0" text="Algorithm:" />
       <Slider fx:id="sliderArraySize" layoutX="276.0" layoutY="362.0" max="200.0" min="1.0" onKeyReleased="#arraySizeBar_ValueChanged" onMouseDragged="#arraySizeBar_ValueChanged" onMouseReleased="#arraySizeBar_ValueChanged" prefHeight="14.0" prefWidth="174.0" />
       <Label layoutX="214.0" layoutY="360.0" text="Array Size" />
-      <Button layoutX="471.0" layoutY="357.0" mnemonicParsing="false" text="Sort" />
+      <Button fx:id="sortBtn" layoutX="471.0" layoutY="357.0" mnemonicParsing="false" onAction="#sortBtn_Click" text="Sort" />
       <Button fx:id="resetBtn" layoutX="517.0" layoutY="357.0" mnemonicParsing="false" onAction="#resetBtn_Click" text="Reset" />
       <Label fx:id="labelSize" layoutX="450.0" layoutY="360.0" text="1" />
       <ComboBox fx:id="comboAlgorithms" layoutX="76.0" layoutY="357.0" prefHeight="25.0" prefWidth="127.0" />
+      <AnchorPane fx:id="recDisplay" layoutX="14.0" layoutY="14.0" prefHeight="329.0" prefWidth="547.0" />
    </children>
 </AnchorPane>
