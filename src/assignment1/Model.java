@@ -1,5 +1,8 @@
 package assignment1;
 
+import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  *
  * @author Miles
@@ -8,33 +11,40 @@ public class Model {
     int[] intArray;
     int arraySize;
     
+    public Model(){
+        intArray = new int[1];
+    }
+    
     public void reset(int size)
     {
         arraySize = size;
         getUnsortedList();
     }
     
-    public void getUnsortedList()
+    public int[] getUnsortedList()
     {
-        int i;
-        for (i=0; i<arraySize; i++)
-        {
-            int rand = (int )(Math.random() * 300 + 1);
-            intArray[i]= rand;
-        }
+        return intArray;
     }
     
-    public int getArraySize(int size)
+    public int getArraySize()
     {
-        arraySize=size;
         return arraySize;
     }
     
-    public int[] setArraySize(int[] oldArray, int size)
+    /**
+     * 
+     * @param maxHeight takes height of pane
+     * @param size takes size of array
+     */
+    public void setArraySize(int maxHeight, int size)
     {
-        oldArray = null;
-        arraySize = size;
-        getUnsortedList();
-        return intArray;
+        System.out.println("function received param");
+        intArray = Arrays.copyOf(intArray, size);
+        
+        int i;
+        for (i=0; i<arraySize; i++)
+        {
+            intArray[i]= ThreadLocalRandom.current().nextInt(1, maxHeight);
+        }
     }
 }

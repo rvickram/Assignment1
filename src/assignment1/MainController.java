@@ -23,6 +23,7 @@ import javafx.scene.shape.Rectangle;
 public class MainController implements Initializable {
     
     ObservableList<String> listItems = FXCollections.observableArrayList();
+    Model heightsArray;
     
     @FXML
     AnchorPane recDisplay;
@@ -39,14 +40,18 @@ public class MainController implements Initializable {
     public void arraySizeBar_ValueChanged(){ //updates array and slider label
         //update the label:
         labelSize.setText(Long.toString(Math.round(sliderArraySize.getValue())));
-        
+        System.out.println("Height is: " + recDisplay.heightProperty().getValue().intValue());
         //update the array:
         //INSERT SETARRAYSIZE
+        
         //CALL DRAWFUNCTION
+        
     }
     
     @FXML
     public void sortBtn_Click(){
+        
+        heightsArray.setArraySize(329, (int)sliderArraySize.getValue());
         drawRectangles();
     }
     
@@ -60,8 +65,9 @@ public class MainController implements Initializable {
         //clear pane:
         recDisplay.getChildren().clear();
         
+        
         //temporary array filled with random ints
-        int[] array = new int[(int)sliderArraySize.getValue()];
+        int[] array = heightsArray.getUnsortedList();
         for(int i = 0; i < (int)sliderArraySize.getValue(); i++){
             //loads array with random integers
             array[i] = ThreadLocalRandom.current().nextInt(1, recDisplay.heightProperty().getValue().intValue());
