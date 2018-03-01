@@ -1,5 +1,8 @@
 package assignment1;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author ryanv
@@ -7,7 +10,17 @@ package assignment1;
 public class SelectionSort implements SortingStrategy{
     
     public void Sort(int[]a){
-        selectionSort(a, a.length);
+         new Thread(()->{
+            for (int i = 0; i < a.length; i++)
+            {
+                try{
+                    Thread.sleep(100);
+                }
+                catch (InterruptedException ex){
+                }
+                 selectionSort(a, a.length - 1);
+            }
+        }).start();
     }
     /**Sorts an array using SelectionSort method
      * 
@@ -36,8 +49,12 @@ return indexOfMin;
     } // end getIndexOfSmallest
     
     private static void swap (int [] a, int i, int j) {
-        int temp = a [i];
+        new Thread(()->{
+            int temp = a [i];
         a [i] = a [j];
         a [j] = temp;
+           
+        }).start();
+        
     }
 }

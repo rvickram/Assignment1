@@ -5,6 +5,9 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
@@ -47,7 +50,6 @@ public class MainController implements Initializable {
         
         //updates the array size
         heightsArray.setArraySize(recDisplay.heightProperty().getValue().intValue(), (int)sliderArraySize.getValue());
-        drawRectangles();
     }
     
     @FXML
@@ -56,12 +58,12 @@ public class MainController implements Initializable {
             if(comboAlgorithms.getValue().toString() == "SelectionSort"){
                 selection = new SelectionSort();
                 selection.Sort(heightsArray.getUnsortedList());
-                drawRectangles();
+               
             }
             else if(comboAlgorithms.getValue().toString() == "MergeSort"){
                 selection = new MergeSort();
                 selection.Sort(heightsArray.getUnsortedList());
-                drawRectangles();
+                
             }
         } catch (Exception ex){
             JOptionPane.showMessageDialog(null, "You have not selected a sorting option!", "Error", JOptionPane.INFORMATION_MESSAGE);
@@ -76,8 +78,12 @@ public class MainController implements Initializable {
         recDisplay.getChildren().clear();
     }
     
-    private void drawRectangles(){
-        //clear pane:
+    public void drawRectangles(){
+        
+        new Thread(()->{
+            while(true){
+            Platform.runLater(()->{
+                           //clear pane:
         recDisplay.getChildren().clear();
         
         //loop sets coords of each rectangle, and draws them:
@@ -96,8 +102,19 @@ public class MainController implements Initializable {
             rec.setHeight(height);
             rec.setFill(Color.RED);
             
-            recDisplay.getChildren().add(rec);
+            recDisplay.getChildren().add(rec); 
         }
+            });
+                try {
+                    Thread.sleep(100);
+                            } catch (InterruptedException ex) {
+                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }).start();
+        
+        
+        
     }
     
     private void setSortStrategy(){
@@ -113,6 +130,7 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setSortStrategy();
+        this.drawRectangles();
     }   
     
 }

@@ -1,6 +1,7 @@
 package assignment1;
 
 import java.lang.reflect.Array;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -8,9 +9,21 @@ import java.lang.reflect.Array;
  */
 public class MergeSort implements SortingStrategy {
     
+    
     @Override
     public void Sort(int[]a){
-        mergeSort(a);
+        new Thread(()->{
+            for (int i = 0; i < a.length; i++)
+            {
+                try{
+                    Thread.sleep(100);
+                }
+                catch (InterruptedException ex){
+                }
+                mergeSort(a);
+            }
+        }).start();
+        
     }
     
     public static void mergeSort(int [ ] a){
@@ -19,6 +32,7 @@ public class MergeSort implements SortingStrategy {
     }
     
     private static void mergeSort(int [ ] a, int [ ] tmp, int left, int right){
+        new Thread (()->{
         if( left < right )
         {
                 int center = (left + right) / 2;
@@ -26,6 +40,7 @@ public class MergeSort implements SortingStrategy {
                 mergeSort(a, tmp, center + 1, right);
                 merge(a, tmp, left, center + 1, right);
         }
+        }).start();
     }
 
     private static void merge(int[ ] a, int[ ] tmp, int left, int right, int rightEnd )
@@ -49,5 +64,7 @@ public class MergeSort implements SortingStrategy {
         // Copy tmp back
         for(int i = 0; i < num; i++, rightEnd--)
             a[rightEnd] = tmp[rightEnd];
+        
+        //ANIMATION HERE:
     }
 }
